@@ -19,6 +19,11 @@ ensureFontsRegistered();
 
 const FONT = "Inter";
 
+// @react-pdf'in textTransform: "uppercase" Türkçe locale-aware değil
+// (i → I yapıyor, İ olmalı). Başlıkları runtime'da locale-aware
+// uppercase'e çeviriyoruz.
+const TR = (s: string): string => s.toLocaleUpperCase("tr-TR");
+
 type ThemePalette = {
   accent: string;
   accentBg: string;
@@ -134,7 +139,6 @@ function ModernDoc({ data, scale }: DocProps) {
     sideHeader: {
       fontSize: 10,
       fontWeight: 600,
-      textTransform: "uppercase",
       letterSpacing: 1.2,
       marginTop: 16,
       marginBottom: 6,
@@ -146,7 +150,6 @@ function ModernDoc({ data, scale }: DocProps) {
     blockTitle: {
       fontSize: 12,
       fontWeight: 700,
-      textTransform: "uppercase",
       letterSpacing: 1.2,
       color: p.accent,
       borderBottomWidth: 1.5,
@@ -189,7 +192,7 @@ function ModernDoc({ data, scale }: DocProps) {
             <Text style={styles.title}>{data.profile.title}</Text>
           )}
 
-          <Text style={styles.sideHeader}>İletişim</Text>
+          <Text style={styles.sideHeader}>{TR("İletişim")}</Text>
           {data.profile.email ? (
             <Text style={styles.line}>{data.profile.email}</Text>
           ) : null}
@@ -210,7 +213,7 @@ function ModernDoc({ data, scale }: DocProps) {
 
           {data.skills.length > 0 && (
             <>
-              <Text style={styles.sideHeader}>Yetenekler</Text>
+              <Text style={styles.sideHeader}>{TR("Yetenekler")}</Text>
               {data.skills.map((s) => (
                 <View
                   key={s.id}
@@ -231,7 +234,7 @@ function ModernDoc({ data, scale }: DocProps) {
 
           {data.languages.length > 0 && (
             <>
-              <Text style={styles.sideHeader}>Diller</Text>
+              <Text style={styles.sideHeader}>{TR("Diller")}</Text>
               {data.languages.map((l) => (
                 <View
                   key={l.id}
@@ -250,7 +253,7 @@ function ModernDoc({ data, scale }: DocProps) {
 
           {data.certifications.length > 0 && (
             <>
-              <Text style={styles.sideHeader}>Sertifikalar</Text>
+              <Text style={styles.sideHeader}>{TR("Sertifikalar")}</Text>
               {data.certifications.map((c) => (
                 <View key={c.id} style={{ marginBottom: 4 }}>
                   <Text style={{ fontWeight: 600 }}>{c.name}</Text>
@@ -271,7 +274,7 @@ function ModernDoc({ data, scale }: DocProps) {
         <View style={styles.main}>
           {data.profile.summary ? (
             <View style={{ marginBottom: 10 }}>
-              <Text style={styles.blockTitle}>Özet</Text>
+              <Text style={styles.blockTitle}>{TR("Özet")}</Text>
               <Text style={{ textAlign: "justify" }}>
                 {data.profile.summary}
               </Text>
@@ -280,7 +283,7 @@ function ModernDoc({ data, scale }: DocProps) {
 
           {data.experiences.length > 0 && (
             <View style={{ marginBottom: 10 }}>
-              <Text style={styles.blockTitle}>İş Deneyimi</Text>
+              <Text style={styles.blockTitle}>{TR("İş Deneyimi")}</Text>
               {data.experiences.map((e) => (
                 <View key={e.id} style={styles.item}>
                   <View style={styles.rowBetween}>
@@ -301,7 +304,7 @@ function ModernDoc({ data, scale }: DocProps) {
 
           {data.education.length > 0 && (
             <View style={{ marginBottom: 10 }}>
-              <Text style={styles.blockTitle}>Eğitim</Text>
+              <Text style={styles.blockTitle}>{TR("Eğitim")}</Text>
               {data.education.map((e) => (
                 <View key={e.id} style={styles.item}>
                   <View style={styles.rowBetween}>
@@ -323,7 +326,7 @@ function ModernDoc({ data, scale }: DocProps) {
 
           {data.additional.length > 0 && (
             <View style={{ marginBottom: 10 }}>
-              <Text style={styles.blockTitle}>Ek Deneyimler</Text>
+              <Text style={styles.blockTitle}>{TR("Ek Deneyimler")}</Text>
               {data.additional.map((a) => (
                 <View key={a.id} style={styles.item}>
                   <View style={styles.rowBetween}>
@@ -341,7 +344,7 @@ function ModernDoc({ data, scale }: DocProps) {
 
           {data.projects.length > 0 && (
             <View>
-              <Text style={styles.blockTitle}>Projeler</Text>
+              <Text style={styles.blockTitle}>{TR("Projeler")}</Text>
               {data.projects.map((pr) => (
                 <View key={pr.id} style={styles.item}>
                   <Text style={styles.bold}>{pr.name}</Text>
@@ -393,7 +396,6 @@ function ClassicDoc({ data, scale }: DocProps) {
     sectionTitle: {
       fontSize: 11,
       fontWeight: 700,
-      textTransform: "uppercase",
       letterSpacing: 1.5,
       borderBottomWidth: 0.5,
       borderBottomColor: p.divider,
@@ -447,14 +449,14 @@ function ClassicDoc({ data, scale }: DocProps) {
 
         {data.profile.summary ? (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Özet</Text>
+            <Text style={styles.sectionTitle}>{TR("Özet")}</Text>
             <Text style={{ textAlign: "justify" }}>{data.profile.summary}</Text>
           </View>
         ) : null}
 
         {data.experiences.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>İş Deneyimi</Text>
+            <Text style={styles.sectionTitle}>{TR("İş Deneyimi")}</Text>
             {data.experiences.map((e) => (
               <View key={e.id} style={styles.item}>
                 <View style={styles.rowBetween}>
@@ -477,7 +479,7 @@ function ClassicDoc({ data, scale }: DocProps) {
 
         {data.education.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Eğitim</Text>
+            <Text style={styles.sectionTitle}>{TR("Eğitim")}</Text>
             {data.education.map((e) => (
               <View key={e.id} style={styles.item}>
                 <View style={styles.rowBetween}>
@@ -499,14 +501,14 @@ function ClassicDoc({ data, scale }: DocProps) {
 
         {data.skills.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Yetenekler</Text>
+            <Text style={styles.sectionTitle}>{TR("Yetenekler")}</Text>
             <Text>{data.skills.map((s) => s.name).join(", ")}</Text>
           </View>
         )}
 
         {data.projects.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Projeler</Text>
+            <Text style={styles.sectionTitle}>{TR("Projeler")}</Text>
             {data.projects.map((pr) => (
               <View key={pr.id} style={styles.item}>
                 <Text style={styles.bold}>
@@ -521,7 +523,7 @@ function ClassicDoc({ data, scale }: DocProps) {
 
         {data.certifications.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Sertifikalar</Text>
+            <Text style={styles.sectionTitle}>{TR("Sertifikalar")}</Text>
             {data.certifications.map((c) => (
               <Text key={c.id}>
                 • {c.name}
@@ -534,7 +536,7 @@ function ClassicDoc({ data, scale }: DocProps) {
 
         {data.languages.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Diller</Text>
+            <Text style={styles.sectionTitle}>{TR("Diller")}</Text>
             <Text>
               {data.languages
                 .map((l) => `${l.name}${l.level ? ` (${l.level})` : ""}`)
@@ -545,7 +547,7 @@ function ClassicDoc({ data, scale }: DocProps) {
 
         {data.additional.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Ek Deneyimler</Text>
+            <Text style={styles.sectionTitle}>{TR("Ek Deneyimler")}</Text>
             {data.additional.map((a) => (
               <View key={a.id} style={styles.item}>
                 <View style={styles.rowBetween}>
@@ -578,7 +580,6 @@ function MinimalDoc({ data, scale }: DocProps) {
     contact: { fontSize: 9, color: p.textMuted, marginTop: 6 },
     sectionTitle: {
       fontSize: 9,
-      textTransform: "uppercase",
       letterSpacing: 2,
       color: p.textMuted,
       marginBottom: 8,
@@ -633,7 +634,7 @@ function MinimalDoc({ data, scale }: DocProps) {
 
         {data.experiences.length > 0 && (
           <>
-            <Text style={styles.sectionTitle}>Deneyim</Text>
+            <Text style={styles.sectionTitle}>{TR("Deneyim")}</Text>
             {data.experiences.map((e) => (
               <View key={e.id} style={styles.row}>
                 <Text style={styles.dateCol}>
@@ -656,7 +657,7 @@ function MinimalDoc({ data, scale }: DocProps) {
 
         {data.education.length > 0 && (
           <>
-            <Text style={styles.sectionTitle}>Eğitim</Text>
+            <Text style={styles.sectionTitle}>{TR("Eğitim")}</Text>
             {data.education.map((e) => (
               <View key={e.id} style={styles.row}>
                 <Text style={styles.dateCol}>
@@ -678,14 +679,14 @@ function MinimalDoc({ data, scale }: DocProps) {
 
         {data.skills.length > 0 && (
           <>
-            <Text style={styles.sectionTitle}>Yetenekler</Text>
+            <Text style={styles.sectionTitle}>{TR("Yetenekler")}</Text>
             <Text>{data.skills.map((s) => s.name).join(" · ")}</Text>
           </>
         )}
 
         {data.projects.length > 0 && (
           <>
-            <Text style={styles.sectionTitle}>Projeler</Text>
+            <Text style={styles.sectionTitle}>{TR("Projeler")}</Text>
             {data.projects.map((pr) => (
               <View key={pr.id} style={{ marginBottom: 6 }}>
                 <Text style={styles.bold}>
@@ -700,7 +701,7 @@ function MinimalDoc({ data, scale }: DocProps) {
 
         {data.additional.length > 0 && (
           <>
-            <Text style={styles.sectionTitle}>Ek Deneyimler</Text>
+            <Text style={styles.sectionTitle}>{TR("Ek Deneyimler")}</Text>
             {data.additional.map((a) => (
               <View key={a.id} style={styles.row}>
                 <Text style={styles.dateCol}>{a.date ?? ""}</Text>
@@ -722,7 +723,7 @@ function MinimalDoc({ data, scale }: DocProps) {
           <View style={{ flexDirection: "row", marginTop: 12, gap: 24 }}>
             {data.certifications.length > 0 && (
               <View style={{ flex: 1 }}>
-                <Text style={styles.sectionTitle}>Sertifikalar</Text>
+                <Text style={styles.sectionTitle}>{TR("Sertifikalar")}</Text>
                 {data.certifications.map((c) => (
                   <Text key={c.id}>
                     {c.name}
@@ -733,7 +734,7 @@ function MinimalDoc({ data, scale }: DocProps) {
             )}
             {data.languages.length > 0 && (
               <View style={{ flex: 1 }}>
-                <Text style={styles.sectionTitle}>Diller</Text>
+                <Text style={styles.sectionTitle}>{TR("Diller")}</Text>
                 {data.languages.map((l) => (
                   <Text key={l.id}>
                     {l.name}
@@ -773,7 +774,6 @@ function CreativeDoc({ data, scale }: DocProps) {
       fontSize: 9,
       fontWeight: 600,
       color: p.accent,
-      textTransform: "uppercase",
       letterSpacing: 1.2,
       marginBottom: 3,
     },
@@ -781,7 +781,6 @@ function CreativeDoc({ data, scale }: DocProps) {
       fontSize: 11,
       fontWeight: 700,
       color: p.accent,
-      textTransform: "uppercase",
       letterSpacing: 1.5,
       marginBottom: 6,
       marginTop: 10,
@@ -841,7 +840,7 @@ function CreativeDoc({ data, scale }: DocProps) {
         <View style={styles.body}>
           {data.profile.summary ? (
             <View style={styles.summaryBox}>
-              <Text style={styles.summaryLabel}>Hakkımda</Text>
+              <Text style={styles.summaryLabel}>{TR("Hakkımda")}</Text>
               <Text style={{ textAlign: "justify" }}>
                 {data.profile.summary}
               </Text>
@@ -850,7 +849,7 @@ function CreativeDoc({ data, scale }: DocProps) {
 
           {data.experiences.length > 0 && (
             <View>
-              <Text style={styles.blockTitle}>Deneyim</Text>
+              <Text style={styles.blockTitle}>{TR("Deneyim")}</Text>
               {data.experiences.map((e) => (
                 <View key={e.id} style={styles.expItem}>
                   <View
@@ -879,7 +878,7 @@ function CreativeDoc({ data, scale }: DocProps) {
           >
             {data.education.length > 0 && (
               <View style={{ flex: 1 }}>
-                <Text style={styles.blockTitle}>Eğitim</Text>
+                <Text style={styles.blockTitle}>{TR("Eğitim")}</Text>
                 {data.education.map((e) => (
                   <View key={e.id} style={{ marginBottom: 5 }}>
                     <Text style={styles.bold}>{e.school}</Text>
@@ -897,7 +896,7 @@ function CreativeDoc({ data, scale }: DocProps) {
             )}
             {data.skills.length > 0 && (
               <View style={{ flex: 1 }}>
-                <Text style={styles.blockTitle}>Yetenekler</Text>
+                <Text style={styles.blockTitle}>{TR("Yetenekler")}</Text>
                 <Text>{data.skills.map((s) => s.name).join(" · ")}</Text>
               </View>
             )}
@@ -905,7 +904,7 @@ function CreativeDoc({ data, scale }: DocProps) {
 
           {data.projects.length > 0 && (
             <View>
-              <Text style={styles.blockTitle}>Projeler</Text>
+              <Text style={styles.blockTitle}>{TR("Projeler")}</Text>
               {data.projects.map((pr) => (
                 <View
                   key={pr.id}
@@ -930,7 +929,7 @@ function CreativeDoc({ data, scale }: DocProps) {
 
           {data.additional.length > 0 && (
             <View>
-              <Text style={styles.blockTitle}>Ek Deneyimler</Text>
+              <Text style={styles.blockTitle}>{TR("Ek Deneyimler")}</Text>
               {data.additional.map((a) => (
                 <View
                   key={a.id}
@@ -969,7 +968,7 @@ function CreativeDoc({ data, scale }: DocProps) {
             <View style={{ flexDirection: "row", gap: 20, marginTop: 6 }}>
               {data.certifications.length > 0 && (
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.blockTitle}>Sertifikalar</Text>
+                  <Text style={styles.blockTitle}>{TR("Sertifikalar")}</Text>
                   {data.certifications.map((c) => (
                     <Text key={c.id}>
                       {c.name}
@@ -980,7 +979,7 @@ function CreativeDoc({ data, scale }: DocProps) {
               )}
               {data.languages.length > 0 && (
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.blockTitle}>Diller</Text>
+                  <Text style={styles.blockTitle}>{TR("Diller")}</Text>
                   {data.languages.map((l) => (
                     <Text key={l.id}>
                       {l.name}
@@ -1015,7 +1014,6 @@ function ExecutiveDoc({ data, scale }: DocProps) {
     sectionTitle: {
       fontSize: 11,
       fontWeight: 700,
-      textTransform: "uppercase",
       letterSpacing: 1.5,
       color: p.accent,
       borderBottomWidth: 0.5,
@@ -1067,14 +1065,14 @@ function ExecutiveDoc({ data, scale }: DocProps) {
 
         {data.profile.summary ? (
           <View style={styles.item}>
-            <Text style={styles.sectionTitle}>Profil Özeti</Text>
+            <Text style={styles.sectionTitle}>{TR("Profil Özeti")}</Text>
             <Text style={{ textAlign: "justify" }}>{data.profile.summary}</Text>
           </View>
         ) : null}
 
         {data.experiences.length > 0 && (
           <View style={styles.item}>
-            <Text style={styles.sectionTitle}>Yönetsel Deneyim</Text>
+            <Text style={styles.sectionTitle}>{TR("Yönetsel Deneyim")}</Text>
             {data.experiences.map((e) => (
               <View key={e.id} style={styles.item}>
                 <View style={styles.rowBetween}>
@@ -1095,7 +1093,7 @@ function ExecutiveDoc({ data, scale }: DocProps) {
 
         {data.education.length > 0 && (
           <View style={styles.item}>
-            <Text style={styles.sectionTitle}>Eğitim</Text>
+            <Text style={styles.sectionTitle}>{TR("Eğitim")}</Text>
             {data.education.map((e) => (
               <View key={e.id} style={styles.rowBetween}>
                 <View>
@@ -1116,14 +1114,14 @@ function ExecutiveDoc({ data, scale }: DocProps) {
 
         {data.skills.length > 0 && (
           <View style={styles.item}>
-            <Text style={styles.sectionTitle}>Yetkinlik Alanları</Text>
+            <Text style={styles.sectionTitle}>{TR("Yetkinlik Alanları")}</Text>
             <Text>{data.skills.map((s) => s.name).join("  ·  ")}</Text>
           </View>
         )}
 
         {data.additional.length > 0 && (
           <View style={styles.item}>
-            <Text style={styles.sectionTitle}>Ek Deneyimler</Text>
+            <Text style={styles.sectionTitle}>{TR("Ek Deneyimler")}</Text>
             {data.additional.map((a) => (
               <View key={a.id} style={styles.item}>
                 <View style={styles.rowBetween}>
@@ -1147,7 +1145,7 @@ function ExecutiveDoc({ data, scale }: DocProps) {
           <View style={{ flexDirection: "row", gap: 24 }}>
             {data.certifications.length > 0 && (
               <View style={{ flex: 1 }}>
-                <Text style={styles.sectionTitle}>Sertifikalar</Text>
+                <Text style={styles.sectionTitle}>{TR("Sertifikalar")}</Text>
                 {data.certifications.map((c) => (
                   <Text key={c.id}>
                     {c.name}
@@ -1158,7 +1156,7 @@ function ExecutiveDoc({ data, scale }: DocProps) {
             )}
             {data.languages.length > 0 && (
               <View style={{ flex: 1 }}>
-                <Text style={styles.sectionTitle}>Diller</Text>
+                <Text style={styles.sectionTitle}>{TR("Diller")}</Text>
                 <Text>
                   {data.languages
                     .map((l) => `${l.name}${l.level ? ` (${l.level})` : ""}`)
@@ -1250,7 +1248,7 @@ function TechDoc({ data, scale }: DocProps) {
         <View style={styles.body}>
           {data.profile.summary ? (
             <View>
-              <Text style={styles.sectionTitle}>## readme.md</Text>
+              <Text style={styles.sectionTitle}>{TR("## readme.md")}</Text>
               <Text style={{ textAlign: "justify" }}>
                 {data.profile.summary}
               </Text>
@@ -1259,7 +1257,7 @@ function TechDoc({ data, scale }: DocProps) {
 
           {data.experiences.length > 0 && (
             <View>
-              <Text style={styles.sectionTitle}>## experience</Text>
+              <Text style={styles.sectionTitle}>{TR("## experience")}</Text>
               {data.experiences.map((e) => (
                 <View key={e.id} style={styles.item}>
                   <View
@@ -1294,7 +1292,7 @@ function TechDoc({ data, scale }: DocProps) {
           <View style={{ flexDirection: "row", gap: 16 }}>
             {data.skills.length > 0 && (
               <View style={{ flex: 1 }}>
-                <Text style={styles.sectionTitle}>## stack.json</Text>
+                <Text style={styles.sectionTitle}>{TR("## stack.json")}</Text>
                 <Text style={{ color: p.textMuted }}>{`{`}</Text>
                 {data.skills.map((s, i) => (
                   <Text key={s.id} style={{ paddingLeft: 8 }}>
@@ -1310,7 +1308,7 @@ function TechDoc({ data, scale }: DocProps) {
             )}
             {data.education.length > 0 && (
               <View style={{ flex: 1 }}>
-                <Text style={styles.sectionTitle}>## education</Text>
+                <Text style={styles.sectionTitle}>{TR("## education")}</Text>
                 {data.education.map((e) => (
                   <View key={e.id} style={{ marginBottom: 4 }}>
                     <Text style={styles.bold}>{e.school}</Text>
@@ -1330,7 +1328,7 @@ function TechDoc({ data, scale }: DocProps) {
 
           {data.projects.length > 0 && (
             <View>
-              <Text style={styles.sectionTitle}>## projects</Text>
+              <Text style={styles.sectionTitle}>{TR("## projects")}</Text>
               {data.projects.map((pr) => (
                 <View key={pr.id} style={styles.item}>
                   <Text>
@@ -1352,7 +1350,7 @@ function TechDoc({ data, scale }: DocProps) {
 
           {data.additional.length > 0 && (
             <View>
-              <Text style={styles.sectionTitle}>## extras</Text>
+              <Text style={styles.sectionTitle}>{TR("## extras")}</Text>
               {data.additional.map((a) => (
                 <View key={a.id} style={styles.item}>
                   <View
@@ -1382,7 +1380,7 @@ function TechDoc({ data, scale }: DocProps) {
             <View style={{ flexDirection: "row", gap: 16 }}>
               {data.certifications.length > 0 && (
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.sectionTitle}>## certs</Text>
+                  <Text style={styles.sectionTitle}>{TR("## certs")}</Text>
                   {data.certifications.map((c) => (
                     <Text key={c.id}>
                       <Text style={styles.accentText}>▸ </Text>
@@ -1394,7 +1392,7 @@ function TechDoc({ data, scale }: DocProps) {
               )}
               {data.languages.length > 0 && (
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.sectionTitle}>## lang</Text>
+                  <Text style={styles.sectionTitle}>{TR("## lang")}</Text>
                   {data.languages.map((l) => (
                     <Text key={l.id}>
                       <Text style={styles.accentText}>▸ </Text>
@@ -1423,7 +1421,6 @@ function AcademicDoc({ data, scale }: DocProps) {
     sectionTitle: {
       fontSize: 11,
       fontWeight: 700,
-      textTransform: "uppercase",
       letterSpacing: 1.5,
       color: p.accent,
       borderBottomWidth: 0.5,
@@ -1479,14 +1476,14 @@ function AcademicDoc({ data, scale }: DocProps) {
 
         {data.profile.summary ? (
           <View>
-            <Text style={styles.sectionTitle}>Araştırma Özeti</Text>
+            <Text style={styles.sectionTitle}>{TR("Araştırma Özeti")}</Text>
             <Text style={{ textAlign: "justify" }}>{data.profile.summary}</Text>
           </View>
         ) : null}
 
         {data.education.length > 0 && (
           <View>
-            <Text style={styles.sectionTitle}>Eğitim</Text>
+            <Text style={styles.sectionTitle}>{TR("Eğitim")}</Text>
             {data.education.map((e) => (
               <View key={e.id} style={styles.item}>
                 <View style={styles.rowBetween}>
@@ -1511,7 +1508,7 @@ function AcademicDoc({ data, scale }: DocProps) {
 
         {data.experiences.length > 0 && (
           <View>
-            <Text style={styles.sectionTitle}>Akademik & Profesyonel Deneyim</Text>
+            <Text style={styles.sectionTitle}>{TR("Akademik & Profesyonel Deneyim")}</Text>
             {data.experiences.map((e) => (
               <View key={e.id} style={styles.item}>
                 <View style={styles.rowBetween}>
@@ -1532,7 +1529,7 @@ function AcademicDoc({ data, scale }: DocProps) {
         {data.additional.length > 0 && (
           <View>
             <Text style={styles.sectionTitle}>
-              Yayınlar, Konferanslar & Sunumlar
+              {TR("Yayınlar, Konferanslar & Sunumlar")}
             </Text>
             {data.additional.map((a, idx) => (
               <View key={a.id} style={styles.listItem}>
@@ -1552,7 +1549,7 @@ function AcademicDoc({ data, scale }: DocProps) {
 
         {data.certifications.length > 0 && (
           <View>
-            <Text style={styles.sectionTitle}>Sertifikalar & Ödüller</Text>
+            <Text style={styles.sectionTitle}>{TR("Sertifikalar & Ödüller")}</Text>
             {data.certifications.map((c) => (
               <Text key={c.id} style={styles.listItem}>
                 • {c.name}
@@ -1565,7 +1562,7 @@ function AcademicDoc({ data, scale }: DocProps) {
 
         {data.projects.length > 0 && (
           <View>
-            <Text style={styles.sectionTitle}>Projeler</Text>
+            <Text style={styles.sectionTitle}>{TR("Projeler")}</Text>
             {data.projects.map((pr) => (
               <View key={pr.id} style={styles.item}>
                 <Text style={styles.bold}>{pr.name}</Text>
@@ -1584,13 +1581,13 @@ function AcademicDoc({ data, scale }: DocProps) {
           <View style={{ flexDirection: "row", gap: 24 }}>
             {data.skills.length > 0 && (
               <View style={{ flex: 1 }}>
-                <Text style={styles.sectionTitle}>Yetkinlik Alanları</Text>
+                <Text style={styles.sectionTitle}>{TR("Yetkinlik Alanları")}</Text>
                 <Text>{data.skills.map((s) => s.name).join(", ")}</Text>
               </View>
             )}
             {data.languages.length > 0 && (
               <View style={{ flex: 1 }}>
-                <Text style={styles.sectionTitle}>Diller</Text>
+                <Text style={styles.sectionTitle}>{TR("Diller")}</Text>
                 <Text>
                   {data.languages
                     .map((l) => `${l.name}${l.level ? ` (${l.level})` : ""}`)
@@ -1632,7 +1629,6 @@ function PastelDoc({ data, scale }: DocProps) {
     sectionTitle: {
       fontSize: 9.5,
       fontWeight: 700,
-      textTransform: "uppercase",
       letterSpacing: 1.2,
       color: p.accent,
       marginBottom: 5,
@@ -1713,7 +1709,7 @@ function PastelDoc({ data, scale }: DocProps) {
                 borderRadius: 10,
               }}
             >
-              <Text style={styles.sectionTitle}>Hakkımda</Text>
+              <Text style={styles.sectionTitle}>{TR("Hakkımda")}</Text>
               <Text style={{ textAlign: "justify" }}>
                 {data.profile.summary}
               </Text>
@@ -1722,7 +1718,7 @@ function PastelDoc({ data, scale }: DocProps) {
 
           {data.experiences.length > 0 && (
             <View>
-              <Text style={styles.sectionTitle}>Deneyim</Text>
+              <Text style={styles.sectionTitle}>{TR("Deneyim")}</Text>
               {data.experiences.map((e) => (
                 <View key={e.id} style={styles.expCard}>
                   <View style={styles.rowBetween}>
@@ -1744,7 +1740,7 @@ function PastelDoc({ data, scale }: DocProps) {
           <View style={{ flexDirection: "row", gap: 12 }}>
             {data.education.length > 0 && (
               <View style={{ flex: 1 }}>
-                <Text style={styles.sectionTitle}>Eğitim</Text>
+                <Text style={styles.sectionTitle}>{TR("Eğitim")}</Text>
                 {data.education.map((e) => (
                   <View key={e.id} style={{ marginBottom: 4 }}>
                     <Text style={styles.bold}>{e.school}</Text>
@@ -1762,7 +1758,7 @@ function PastelDoc({ data, scale }: DocProps) {
             )}
             {data.skills.length > 0 && (
               <View style={{ flex: 1 }}>
-                <Text style={styles.sectionTitle}>Yetkinlikler</Text>
+                <Text style={styles.sectionTitle}>{TR("Yetkinlikler")}</Text>
                 <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
                   {data.skills.map((s) => (
                     <Text key={s.id} style={styles.chip}>
@@ -1776,7 +1772,7 @@ function PastelDoc({ data, scale }: DocProps) {
 
           {data.projects.length > 0 && (
             <View>
-              <Text style={styles.sectionTitle}>Projeler</Text>
+              <Text style={styles.sectionTitle}>{TR("Projeler")}</Text>
               <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
                 {data.projects.map((pr) => (
                   <View
@@ -1801,7 +1797,7 @@ function PastelDoc({ data, scale }: DocProps) {
 
           {data.additional.length > 0 && (
             <View>
-              <Text style={styles.sectionTitle}>Ek Deneyimler</Text>
+              <Text style={styles.sectionTitle}>{TR("Ek Deneyimler")}</Text>
               {data.additional.map((a) => (
                 <View key={a.id} style={styles.expCard}>
                   <View style={styles.rowBetween}>
@@ -1823,7 +1819,7 @@ function PastelDoc({ data, scale }: DocProps) {
             <View style={{ flexDirection: "row", gap: 12 }}>
               {data.certifications.length > 0 && (
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.sectionTitle}>Sertifikalar</Text>
+                  <Text style={styles.sectionTitle}>{TR("Sertifikalar")}</Text>
                   {data.certifications.map((c) => (
                     <Text key={c.id}>
                       <Text style={styles.bold}>{c.name}</Text>
@@ -1834,7 +1830,7 @@ function PastelDoc({ data, scale }: DocProps) {
               )}
               {data.languages.length > 0 && (
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.sectionTitle}>Diller</Text>
+                  <Text style={styles.sectionTitle}>{TR("Diller")}</Text>
                   {data.languages.map((l) => (
                     <Text key={l.id}>
                       {l.name}
