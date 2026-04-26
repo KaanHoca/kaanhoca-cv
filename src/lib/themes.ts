@@ -1,7 +1,15 @@
 import type { ComponentType } from "react";
 import type { CvData } from "@/lib/cv-schema";
 
-export type ThemeId = "modern" | "classic" | "minimal" | "creative";
+export type ThemeId =
+  | "modern"
+  | "classic"
+  | "minimal"
+  | "creative"
+  | "executive"
+  | "tech"
+  | "academic"
+  | "pastel";
 
 export type ThemeMeta = {
   id: ThemeId;
@@ -34,6 +42,30 @@ export const themes: ThemeMeta[] = [
     name: "Kreatif",
     description: "Renkli başlıklar ve modern grid yapısı.",
     accent: "#db2777",
+  },
+  {
+    id: "executive",
+    name: "Executive",
+    description: "Üst düzey yönetici için lacivert serif, ciddi tek kolon.",
+    accent: "#1e3a8a",
+  },
+  {
+    id: "tech",
+    name: "Tech",
+    description: "Mühendisler için monospace, terminal estetiği.",
+    accent: "#10b981",
+  },
+  {
+    id: "academic",
+    name: "Akademik",
+    description: "Yayın ve sertifika ağırlıklı, geniş satır aralığı.",
+    accent: "#374151",
+  },
+  {
+    id: "pastel",
+    name: "Pastel",
+    description: "Kreatif sektörler için yumuşak renkler, yuvarlak köşeler.",
+    accent: "#a78bfa",
   },
 ];
 

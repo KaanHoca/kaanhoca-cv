@@ -4,18 +4,21 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { type CvData, emptyCv, sampleCv } from "@/lib/cv-schema";
 import { type ThemeId, defaultThemeId } from "@/lib/themes";
+import { type Density, defaultDensity } from "@/lib/density";
 
 type CvStore = {
   data: CvData;
   themeId: ThemeId;
+  density: Density;
   setData: (data: CvData) => void;
   patchData: (patch: Partial<CvData>) => void;
   setTheme: (id: ThemeId) => void;
+  setDensity: (d: Density) => void;
   loadSample: () => void;
   reset: () => void;
 };
 
-const STORE_VERSION = 2;
+const STORE_VERSION = 3;
 
 function ensureCvShape(data: Partial<CvData> | undefined): CvData {
   return {
@@ -36,9 +39,11 @@ export const useCvStore = create<CvStore>()(
     (set) => ({
       data: emptyCv,
       themeId: defaultThemeId,
+      density: defaultDensity,
       setData: (data) => set({ data }),
       patchData: (patch) => set((state) => ({ data: { ...state.data, ...patch } })),
       setTheme: (themeId) => set({ themeId }),
+      setDensity: (density) => set({ density }),
       loadSample: () => set({ data: sampleCv }),
       reset: () => set({ data: emptyCv }),
     }),
@@ -51,10 +56,14 @@ export const useCvStore = create<CvStore>()(
           ...s,
           data: ensureCvShape(s.data),
           themeId: (s.themeId as ThemeId) ?? defaultThemeId,
+          density: (s.density as Density) ?? defaultDensity,
         } as CvStore;
       },
       onRehydrateStorage: () => (state) => {
-        if (state) state.data = ensureCvShape(state.data);
+        if (state) {
+          state.data = ensureCvShape(state.data);
+          if (!state.density) state.density = defaultDensity;
+        }
       },
     },
   ),

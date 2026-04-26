@@ -25,6 +25,7 @@ import {
 } from "@/components/editor/sections";
 import { CvPreview } from "@/components/preview/cv-preview";
 import { ThemePicker } from "@/components/editor/theme-picker";
+import { DensityPicker } from "@/components/editor/density-picker";
 import { DownloadButton } from "@/components/editor/download-button";
 
 const sections = [
@@ -107,7 +108,10 @@ export function EditorShell() {
 
       <div className="flex flex-col bg-muted/10">
         <div className="flex items-center justify-between gap-2 border-b bg-background/60 px-4 py-2 backdrop-blur">
-          <ThemePicker />
+          <div className="flex items-center gap-3">
+            <ThemePicker />
+            <DensityPicker />
+          </div>
           <DownloadButton />
         </div>
         <ScrollArea className="flex-1">

@@ -25,6 +25,7 @@ function slugify(value: string): string {
 export function DownloadButton() {
   const data = useCvStore((s) => s.data);
   const themeId = useCvStore((s) => s.themeId);
+  const density = useCvStore((s) => s.density);
   const [loading, setLoading] = useState(false);
 
   async function handleDownload() {
@@ -35,7 +36,7 @@ export function DownloadButton() {
         import("@/components/pdf/cv-document"),
       ]);
       const blob = await pdf(
-        <CvDocument data={data} themeId={themeId} />,
+        <CvDocument data={data} themeId={themeId} density={density} />,
       ).toBlob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
