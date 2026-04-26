@@ -15,6 +15,22 @@ type CvStore = {
   reset: () => void;
 };
 
+const STORE_VERSION = 2;
+
+function ensureCvShape(data: Partial<CvData> | undefined): CvData {
+  return {
+    profile: { ...emptyCv.profile, ...(data?.profile ?? {}) },
+    links: data?.links ?? [],
+    experiences: data?.experiences ?? [],
+    education: data?.education ?? [],
+    skills: data?.skills ?? [],
+    projects: data?.projects ?? [],
+    certifications: data?.certifications ?? [],
+    languages: data?.languages ?? [],
+    additional: data?.additional ?? [],
+  };
+}
+
 export const useCvStore = create<CvStore>()(
   persist(
     (set) => ({
@@ -28,6 +44,18 @@ export const useCvStore = create<CvStore>()(
     }),
     {
       name: "kaanhoca-cv-store-v1",
+      version: STORE_VERSION,
+      migrate: (persistedState) => {
+        const s = (persistedState ?? {}) as Partial<CvStore>;
+        return {
+          ...s,
+          data: ensureCvShape(s.data),
+          themeId: (s.themeId as ThemeId) ?? defaultThemeId,
+        } as CvStore;
+      },
+      onRehydrateStorage: () => (state) => {
+        if (state) state.data = ensureCvShape(state.data);
+      },
     },
   ),
 );
