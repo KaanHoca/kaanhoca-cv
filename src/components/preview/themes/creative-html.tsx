@@ -21,15 +21,25 @@ export function CreativeHtmlTheme({ data }: { data: CvData }) {
         }}
       >
         <div className="flex items-end justify-between gap-4">
-          <div>
-            {profile.fullName && (
-              <h1 className="text-[28pt] font-extrabold leading-none">
-                {profile.fullName}
-              </h1>
+          <div className="flex items-center gap-4">
+            {profile.photoDataUrl && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={profile.photoDataUrl}
+                alt={profile.fullName || "Profil"}
+                className="h-24 w-24 rounded-full border-2 border-white/40 object-cover shrink-0"
+              />
             )}
-            {profile.title && (
-              <p className="text-[12pt] mt-1 opacity-90">{profile.title}</p>
-            )}
+            <div>
+              {profile.fullName && (
+                <h1 className="text-[28pt] font-extrabold leading-none">
+                  {profile.fullName}
+                </h1>
+              )}
+              {profile.title && (
+                <p className="text-[12pt] mt-1 opacity-90">{profile.title}</p>
+              )}
+            </div>
           </div>
           <div className="text-right text-[9.5pt] opacity-95 space-y-0.5">
             {profile.email && <p>{profile.email}</p>}

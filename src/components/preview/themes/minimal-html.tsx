@@ -10,24 +10,34 @@ export function MinimalHtmlTheme({ data }: { data: CvData }) {
       style={{ width: "210mm", minHeight: "297mm" }}
       className="bg-white text-[10.5pt] text-slate-800 leading-relaxed font-sans px-14 py-12 space-y-7"
     >
-      <header className="space-y-1">
-        {profile.fullName && (
-          <h1 className="text-[26pt] font-light tracking-tight text-slate-900">
-            {profile.fullName}
-          </h1>
-        )}
-        {profile.title && (
-          <p className="text-[12pt] text-slate-500">{profile.title}</p>
-        )}
-        <p className="text-[9.5pt] text-slate-500 pt-1">
-          {[profile.email, profile.phone, profile.location, profile.website]
-            .filter(Boolean)
-            .join(" / ")}
-        </p>
-        {data.links.length > 0 && (
-          <p className="text-[9.5pt] text-slate-500">
-            {data.links.map((l) => `${l.label} ${l.url}`).join(" / ")}
+      <header className="flex items-start justify-between gap-6">
+        <div className="space-y-1 flex-1">
+          {profile.fullName && (
+            <h1 className="text-[26pt] font-light tracking-tight text-slate-900">
+              {profile.fullName}
+            </h1>
+          )}
+          {profile.title && (
+            <p className="text-[12pt] text-slate-500">{profile.title}</p>
+          )}
+          <p className="text-[9.5pt] text-slate-500 pt-1">
+            {[profile.email, profile.phone, profile.location, profile.website]
+              .filter(Boolean)
+              .join(" / ")}
           </p>
+          {data.links.length > 0 && (
+            <p className="text-[9.5pt] text-slate-500">
+              {data.links.map((l) => `${l.label} ${l.url}`).join(" / ")}
+            </p>
+          )}
+        </div>
+        {profile.photoDataUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={profile.photoDataUrl}
+            alt={profile.fullName || "Profil"}
+            className="h-24 w-24 rounded-sm object-cover shrink-0"
+          />
         )}
       </header>
 

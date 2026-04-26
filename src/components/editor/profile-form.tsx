@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCvStore } from "@/lib/cv-store";
 import type { Profile } from "@/lib/cv-schema";
+import { PhotoUpload } from "@/components/editor/photo-upload";
 
 const fields: Array<{
   key: keyof Profile;
@@ -31,6 +32,7 @@ export function ProfileForm() {
 
   return (
     <div className="grid gap-4 sm:grid-cols-2">
+      <PhotoUpload />
       {fields.map((f) => (
         <div key={f.key} className={f.full ? "sm:col-span-2" : ""}>
           <Label htmlFor={`profile-${f.key}`}>{f.label}</Label>

@@ -11,6 +11,14 @@ export function ClassicHtmlTheme({ data }: { data: CvData }) {
       className="bg-white text-[10.5pt] text-slate-900 leading-snug font-serif px-12 py-10 space-y-5"
     >
       <header className="text-center border-b-2 border-slate-900 pb-4">
+        {profile.photoDataUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={profile.photoDataUrl}
+            alt={profile.fullName || "Profil"}
+            className="mx-auto mb-3 h-24 w-24 rounded-full object-cover"
+          />
+        )}
         {profile.fullName && (
           <h1 className="text-[22pt] font-bold tracking-wide">
             {profile.fullName}

@@ -16,6 +16,14 @@ export function ModernHtmlTheme({ data }: { data: CvData }) {
         className="w-[34%] p-8 text-white"
         style={{ backgroundColor: ACCENT }}
       >
+        {profile.photoDataUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={profile.photoDataUrl}
+            alt={profile.fullName || "Profil"}
+            className="mb-4 h-28 w-28 rounded-full border-2 border-white/40 object-cover"
+          />
+        )}
         {profile.fullName && (
           <h1 className="text-[18pt] font-bold leading-tight">
             {profile.fullName}

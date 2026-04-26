@@ -7,6 +7,7 @@ import {
   View,
   StyleSheet,
   Link,
+  Image,
 } from "@react-pdf/renderer";
 import type { CvData } from "@/lib/cv-schema";
 import type { ThemeId } from "@/lib/themes";
@@ -127,6 +128,18 @@ function ModernDoc({ data }: { data: CvData }) {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.sidebar}>
+          {data.profile.photoDataUrl ? (
+            <Image
+              src={data.profile.photoDataUrl}
+              style={{
+                width: 90,
+                height: 90,
+                borderRadius: 45,
+                marginBottom: 12,
+                objectFit: "cover",
+              }}
+            />
+          ) : null}
           {data.profile.fullName && (
             <Text style={styles.name}>{data.profile.fullName}</Text>
           )}
@@ -346,6 +359,18 @@ function ClassicDoc({ data }: { data: CvData }) {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
+          {data.profile.photoDataUrl ? (
+            <Image
+              src={data.profile.photoDataUrl}
+              style={{
+                width: 70,
+                height: 70,
+                borderRadius: 35,
+                marginBottom: 8,
+                objectFit: "cover",
+              }}
+            />
+          ) : null}
           {data.profile.fullName && (
             <Text style={styles.name}>{data.profile.fullName}</Text>
           )}
@@ -495,18 +520,28 @@ function MinimalDoc({ data }: { data: CvData }) {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {data.profile.fullName && (
-          <Text style={styles.name}>{data.profile.fullName}</Text>
-        )}
-        {data.profile.title && (
-          <Text style={styles.title}>{data.profile.title}</Text>
-        )}
-        {contact ? <Text style={styles.contact}>{contact}</Text> : null}
-        {data.links.length > 0 && (
-          <Text style={styles.contact}>
-            {data.links.map((l) => `${l.label} ${l.url}`).join(" / ")}
-          </Text>
-        )}
+        <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 16 }}>
+          <View style={{ flex: 1 }}>
+            {data.profile.fullName && (
+              <Text style={styles.name}>{data.profile.fullName}</Text>
+            )}
+            {data.profile.title && (
+              <Text style={styles.title}>{data.profile.title}</Text>
+            )}
+            {contact ? <Text style={styles.contact}>{contact}</Text> : null}
+            {data.links.length > 0 && (
+              <Text style={styles.contact}>
+                {data.links.map((l) => `${l.label} ${l.url}`).join(" / ")}
+              </Text>
+            )}
+          </View>
+          {data.profile.photoDataUrl ? (
+            <Image
+              src={data.profile.photoDataUrl}
+              style={{ width: 70, height: 70, objectFit: "cover" }}
+            />
+          ) : null}
+        </View>
 
         {data.profile.summary ? (
           <Text style={{ marginTop: 14, textAlign: "justify" }}>
@@ -658,13 +693,26 @@ function CreativeDoc({ data }: { data: CvData }) {
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
           <View style={styles.headerRow}>
-            <View>
-              {data.profile.fullName && (
-                <Text style={styles.name}>{data.profile.fullName}</Text>
-              )}
-              {data.profile.title && (
-                <Text style={styles.title}>{data.profile.title}</Text>
-              )}
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+              {data.profile.photoDataUrl ? (
+                <Image
+                  src={data.profile.photoDataUrl}
+                  style={{
+                    width: 70,
+                    height: 70,
+                    borderRadius: 35,
+                    objectFit: "cover",
+                  }}
+                />
+              ) : null}
+              <View>
+                {data.profile.fullName && (
+                  <Text style={styles.name}>{data.profile.fullName}</Text>
+                )}
+                {data.profile.title && (
+                  <Text style={styles.title}>{data.profile.title}</Text>
+                )}
+              </View>
             </View>
             <View>
               {data.profile.email ? (
