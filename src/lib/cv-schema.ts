@@ -75,6 +75,14 @@ export const languageSchema = z.object({
   level: z.enum(["A1", "A2", "B1", "B2", "C1", "C2", "Anadil"]).optional(),
 });
 
+export const additionalSchema = z.object({
+  id: z.string(),
+  title: z.string().trim().min(1, "Başlık zorunludur"),
+  organization: optionalString,
+  date: optionalString,
+  description: optionalString,
+});
+
 export const cvDataSchema = z.object({
   profile: profileSchema,
   links: z.array(linkSchema).default([]),
@@ -84,6 +92,7 @@ export const cvDataSchema = z.object({
   projects: z.array(projectSchema).default([]),
   certifications: z.array(certificationSchema).default([]),
   languages: z.array(languageSchema).default([]),
+  additional: z.array(additionalSchema).default([]),
 });
 
 export type CvData = z.infer<typeof cvDataSchema>;
@@ -95,6 +104,7 @@ export type Skill = z.infer<typeof skillSchema>;
 export type Project = z.infer<typeof projectSchema>;
 export type Certification = z.infer<typeof certificationSchema>;
 export type Language = z.infer<typeof languageSchema>;
+export type Additional = z.infer<typeof additionalSchema>;
 
 export const emptyCv: CvData = {
   profile: {
@@ -114,6 +124,7 @@ export const emptyCv: CvData = {
   projects: [],
   certifications: [],
   languages: [],
+  additional: [],
 };
 
 export const sampleCv: CvData = {
@@ -196,5 +207,23 @@ export const sampleCv: CvData = {
   languages: [
     { id: "lng1", name: "Türkçe", level: "Anadil" },
     { id: "lng2", name: "İngilizce", level: "C1" },
+  ],
+  additional: [
+    {
+      id: "ad1",
+      title: "Konferans Konuşmacısı",
+      organization: "DevFest İstanbul",
+      date: "2024-11",
+      description:
+        "'Modern React Performans Stratejileri' başlıklı 30 dakikalık sunum.",
+    },
+    {
+      id: "ad2",
+      title: "Gönüllü Eğitmen",
+      organization: "Türkiye Eğitim Vakfı",
+      date: "2023-2024",
+      description:
+        "Lise öğrencilerine haftada 2 saat web geliştirme atölyeleri verdim.",
+    },
   ],
 };

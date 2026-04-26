@@ -143,6 +143,29 @@ export function ModernHtmlTheme({ data }: { data: CvData }) {
           </Block>
         )}
 
+        {data.additional.length > 0 && (
+          <Block title="Ek Deneyimler" accent={ACCENT}>
+            <div className="space-y-3">
+              {data.additional.map((a) => (
+                <div key={a.id}>
+                  <div className="flex justify-between gap-2">
+                    <p className="font-semibold">{a.title}</p>
+                    {a.date && (
+                      <span className="text-[9pt] text-slate-600 whitespace-nowrap">
+                        {a.date}
+                      </span>
+                    )}
+                  </div>
+                  {a.organization && (
+                    <p style={{ color: ACCENT }}>{a.organization}</p>
+                  )}
+                  {a.description && <p>{a.description}</p>}
+                </div>
+              ))}
+            </div>
+          </Block>
+        )}
+
         {data.projects.length > 0 && (
           <Block title="Projeler" accent={ACCENT}>
             <div className="space-y-3">

@@ -13,6 +13,7 @@ import {
 import { useCvStore, newId } from "@/lib/cv-store";
 import { ListSection } from "@/components/editor/list-section";
 import type {
+  Additional,
   Certification,
   Education,
   Experience,
@@ -21,6 +22,8 @@ import type {
   Project,
   Skill,
 } from "@/lib/cv-schema";
+
+const NO_LEVEL = "__none__";
 
 function Field({
   label,
@@ -231,7 +234,7 @@ export function SkillSection() {
         patch({
           skills: [
             ...items,
-            { id: newId("s"), name: "", level: "orta", category: "" },
+            { id: newId("s"), name: "", category: "" },
           ],
         })
       }
@@ -258,15 +261,21 @@ export function SkillSection() {
               onChange={(e) => update({ category: e.target.value })}
             />
           </Field>
-          <Field label="Seviye">
+          <Field label="Seviye (opsiyonel)">
             <Select
-              value={item.level ?? "orta"}
-              onValueChange={(v) => update({ level: v as Skill["level"] })}
+              value={item.level ?? NO_LEVEL}
+              onValueChange={(v) =>
+                update({
+                  level:
+                    v === NO_LEVEL ? undefined : (v as Skill["level"]),
+                })
+              }
             >
               <SelectTrigger>
-                <SelectValue />
+                <SelectValue placeholder="Belirtme" />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value={NO_LEVEL}>Belirtme</SelectItem>
                 {SKILL_LEVELS.map((lvl) => (
                   <SelectItem key={lvl} value={lvl as string}>
                     {lvl}
@@ -478,6 +487,76 @@ export function LanguageSection() {
                 ))}
               </SelectContent>
             </Select>
+          </Field>
+        </div>
+      )}
+    />
+  );
+}
+
+export function AdditionalSection() {
+  const items = useCvStore((s) => s.data.additional);
+  const patch = useCvStore((s) => s.patchData);
+  const data = useCvStore((s) => s.data);
+
+  return (
+    <ListSection<Additional>
+      items={items}
+      addLabel="Ek Deneyim Ekle"
+      emptyLabel="Henüz ek deneyim eklemediniz. Konferanslar, gönüllü çalışmalar, ödüller, yayınlar burada yer alabilir."
+      onAdd={() =>
+        patch({
+          additional: [
+            ...items,
+            {
+              id: newId("ad"),
+              title: "",
+              organization: "",
+              date: "",
+              description: "",
+            },
+          ],
+        })
+      }
+      onRemove={(id) =>
+        patch({ additional: data.additional.filter((x) => x.id !== id) })
+      }
+      onChange={(id, p) =>
+        patch({
+          additional: data.additional.map((x) =>
+            x.id === id ? { ...x, ...p } : x,
+          ),
+        })
+      }
+      renderItem={(item, update) => (
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Başlık" className="col-span-2">
+            <Input
+              value={item.title}
+              placeholder="Konferans Konuşmacısı"
+              onChange={(e) => update({ title: e.target.value })}
+            />
+          </Field>
+          <Field label="Kurum / Etkinlik">
+            <Input
+              value={item.organization ?? ""}
+              placeholder="DevFest İstanbul"
+              onChange={(e) => update({ organization: e.target.value })}
+            />
+          </Field>
+          <Field label="Tarih">
+            <Input
+              value={item.date ?? ""}
+              placeholder="2024-11"
+              onChange={(e) => update({ date: e.target.value })}
+            />
+          </Field>
+          <Field label="Açıklama" className="col-span-2">
+            <Textarea
+              rows={2}
+              value={item.description ?? ""}
+              onChange={(e) => update({ description: e.target.value })}
+            />
           </Field>
         </div>
       )}

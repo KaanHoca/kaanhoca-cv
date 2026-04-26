@@ -116,6 +116,29 @@ export function MinimalHtmlTheme({ data }: { data: CvData }) {
         </Section>
       )}
 
+      {data.additional.length > 0 && (
+        <Section title="Ek Deneyimler">
+          <div className="space-y-3">
+            {data.additional.map((a) => (
+              <div key={a.id} className="grid grid-cols-[120px_1fr] gap-4">
+                <div className="text-[9.5pt] text-slate-500">
+                  {a.date ?? ""}
+                </div>
+                <div>
+                  <p className="font-medium text-slate-900">{a.title}</p>
+                  {a.organization && (
+                    <p className="text-slate-600 text-[10pt]">
+                      {a.organization}
+                    </p>
+                  )}
+                  {a.description && <p>{a.description}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
+
       {(data.certifications.length > 0 || data.languages.length > 0) && (
         <div className="grid grid-cols-2 gap-8">
           {data.certifications.length > 0 && (

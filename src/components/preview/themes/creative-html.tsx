@@ -167,6 +167,35 @@ export function CreativeHtmlTheme({ data }: { data: CvData }) {
           </Block>
         )}
 
+        {data.additional.length > 0 && (
+          <Block title="Ek Deneyimler" accent={ACCENT}>
+            <div className="space-y-3">
+              {data.additional.map((a) => (
+                <div key={a.id} className="relative pl-5">
+                  <span
+                    className="absolute left-0 top-1.5 h-2.5 w-2.5 rounded-full"
+                    style={{ backgroundColor: ACCENT }}
+                  />
+                  <div className="flex justify-between gap-2">
+                    <p className="font-bold">{a.title}</p>
+                    {a.date && (
+                      <span className="text-[9pt] text-slate-500 whitespace-nowrap">
+                        {a.date}
+                      </span>
+                    )}
+                  </div>
+                  {a.organization && (
+                    <p style={{ color: ACCENT }} className="font-medium">
+                      {a.organization}
+                    </p>
+                  )}
+                  {a.description && <p>{a.description}</p>}
+                </div>
+              ))}
+            </div>
+          </Block>
+        )}
+
         {(data.certifications.length > 0 || data.languages.length > 0) && (
           <div className="grid grid-cols-2 gap-6">
             {data.certifications.length > 0 && (

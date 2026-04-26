@@ -149,6 +149,31 @@ export function ClassicHtmlTheme({ data }: { data: CvData }) {
           </p>
         </Section>
       )}
+
+      {data.additional.length > 0 && (
+        <Section title="Ek Deneyimler">
+          <div className="space-y-2">
+            {data.additional.map((a) => (
+              <div key={a.id} className="flex justify-between gap-3">
+                <div>
+                  <p className="font-semibold">
+                    {a.title}
+                    {a.organization ? `, ${a.organization}` : ""}
+                  </p>
+                  {a.description && (
+                    <p className="text-[10pt]">{a.description}</p>
+                  )}
+                </div>
+                {a.date && (
+                  <span className="text-[9.5pt] text-slate-600 whitespace-nowrap">
+                    {a.date}
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
     </div>
   );
 }

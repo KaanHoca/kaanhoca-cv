@@ -279,6 +279,24 @@ function ModernDoc({ data }: { data: CvData }) {
             </View>
           )}
 
+          {data.additional.length > 0 && (
+            <View style={{ marginBottom: 10 }}>
+              <Text style={styles.blockTitle}>Ek Deneyimler</Text>
+              {data.additional.map((a) => (
+                <View key={a.id} style={styles.item}>
+                  <View style={styles.rowBetween}>
+                    <Text style={styles.bold}>{a.title}</Text>
+                    {a.date ? <Text style={styles.muted}>{a.date}</Text> : null}
+                  </View>
+                  {a.organization ? (
+                    <Text style={styles.accent}>{a.organization}</Text>
+                  ) : null}
+                  {a.description ? <Text>{a.description}</Text> : null}
+                </View>
+              ))}
+            </View>
+          )}
+
           {data.projects.length > 0 && (
             <View>
               <Text style={styles.blockTitle}>Projeler</Text>
@@ -482,6 +500,28 @@ function ClassicDoc({ data }: { data: CvData }) {
             </Text>
           </View>
         )}
+
+        {data.additional.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Ek Deneyimler</Text>
+            {data.additional.map((a) => (
+              <View key={a.id} style={styles.item}>
+                <View style={styles.rowBetween}>
+                  <Text style={styles.bold}>
+                    {a.title}
+                    {a.organization ? `, ${a.organization}` : ""}
+                  </Text>
+                  {a.date ? (
+                    <Text style={{ color: p.textMuted, fontSize: 9 }}>
+                      {a.date}
+                    </Text>
+                  ) : null}
+                </View>
+                {a.description ? <Text>{a.description}</Text> : null}
+              </View>
+            ))}
+          </View>
+        )}
       </Page>
     </Document>
   );
@@ -611,6 +651,26 @@ function MinimalDoc({ data }: { data: CvData }) {
                   {pr.technologies ? ` · ${pr.technologies}` : ""}
                 </Text>
                 {pr.description ? <Text>{pr.description}</Text> : null}
+              </View>
+            ))}
+          </>
+        )}
+
+        {data.additional.length > 0 && (
+          <>
+            <Text style={styles.sectionTitle}>Ek Deneyimler</Text>
+            {data.additional.map((a) => (
+              <View key={a.id} style={styles.row}>
+                <Text style={styles.dateCol}>{a.date ?? ""}</Text>
+                <View style={styles.contentCol}>
+                  <Text style={styles.bold}>{a.title}</Text>
+                  {a.organization ? (
+                    <Text style={{ color: p.textMuted }}>
+                      {a.organization}
+                    </Text>
+                  ) : null}
+                  {a.description ? <Text>{a.description}</Text> : null}
+                </View>
               </View>
             ))}
           </>
@@ -821,6 +881,43 @@ function CreativeDoc({ data }: { data: CvData }) {
                     </Text>
                   ) : null}
                   {pr.description ? <Text>{pr.description}</Text> : null}
+                </View>
+              ))}
+            </View>
+          )}
+
+          {data.additional.length > 0 && (
+            <View>
+              <Text style={styles.blockTitle}>Ek Deneyimler</Text>
+              {data.additional.map((a) => (
+                <View
+                  key={a.id}
+                  style={{
+                    marginBottom: 5,
+                    paddingLeft: 8,
+                    borderLeftWidth: 2,
+                    borderLeftColor: p.accent,
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Text style={styles.bold}>{a.title}</Text>
+                    {a.date ? (
+                      <Text style={{ fontSize: 8.5, color: p.textMuted }}>
+                        {a.date}
+                      </Text>
+                    ) : null}
+                  </View>
+                  {a.organization ? (
+                    <Text style={{ color: p.accent, fontWeight: 500 }}>
+                      {a.organization}
+                    </Text>
+                  ) : null}
+                  {a.description ? <Text>{a.description}</Text> : null}
                 </View>
               ))}
             </View>

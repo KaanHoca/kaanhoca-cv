@@ -14,6 +14,7 @@ import { Sparkles, Trash2, FileDown } from "lucide-react";
 import { useCvStore } from "@/lib/cv-store";
 import { ProfileForm } from "@/components/editor/profile-form";
 import {
+  AdditionalSection,
   CertificationSection,
   EducationSection,
   ExperienceSection,
@@ -35,6 +36,7 @@ const sections = [
   { id: "projects", label: "Projeler", node: <ProjectSection /> },
   { id: "certifications", label: "Sertifikalar", node: <CertificationSection /> },
   { id: "languages", label: "Diller", node: <LanguageSection /> },
+  { id: "additional", label: "Ek Deneyimler", node: <AdditionalSection /> },
 ];
 
 export function EditorShell() {
